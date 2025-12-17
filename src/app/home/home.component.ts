@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { email, Field, form, required } from '@angular/forms/signals';
+import { email, Field, form, required, validate } from '@angular/forms/signals';
 import { TextFormItemComponent } from '../shared/text-form-item/text-form-item.component';
 import { NumberFormItemComponent } from '../shared/number-form-item/number-form-item.component';
 import { DetailsFormComponent } from './details-form/details-form.component';
@@ -65,6 +65,23 @@ export class HomeComponent {
   userForm = form<UserData>(this.userModel, (schema) =>{
     // user specific
     required(schema.id, { message: 'ID is required' });
+    // Custom validator to check for unique ID
+    validate(schema.id, ({value}) => {
+      let isDuplicate = false;
+      this.users().forEach(user => {
+        console.log(user.id);
+        if (user.id === value()) {
+          isDuplicate = true;
+        }
+      });
+      if (isDuplicate) {
+        return {
+          kind: 'unique',
+          message: 'ID must be unique'
+        };
+      }
+      return null;
+    });
     required(schema.email, { message: 'Email is required' });
     email(schema.email, { message: 'Email is invalid' });
     required(schema.username, { message: 'Username is required' });
