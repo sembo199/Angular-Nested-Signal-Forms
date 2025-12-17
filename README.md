@@ -4,7 +4,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue.svg)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-A comprehensive demonstration of Angular 21's powerful **Signal Forms** feature, showcasing how to build complex, nested forms with reusable components. This project serves as a practical example for developers looking to leverage Angular's reactive forms with signals for better performance and developer experience.
+A comprehensive demonstration of Angular 21's powerful **Signal Forms** feature, showcasing how to build complex, nested forms with reusable components. This project serves as a practical example for developers looking to leverage Angular's signal forms for better performance and developer experience.
 
 ## 🚀 Features
 
