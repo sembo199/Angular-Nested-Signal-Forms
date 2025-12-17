@@ -69,7 +69,6 @@ export class HomeComponent {
     validate(schema.id, ({value}) => {
       let isDuplicate = false;
       this.users().forEach(user => {
-        console.log(user.id);
         if (user.id === value()) {
           isDuplicate = true;
         }
@@ -100,8 +99,6 @@ export class HomeComponent {
 
   onSubmit(event: Event) {
     event.preventDefault();
-    // Perform login logic here
-    console.log('User Form Value:', this.userForm().value());
     this.users.set([...this.users(), this.userForm().value()]);
   }
 }
