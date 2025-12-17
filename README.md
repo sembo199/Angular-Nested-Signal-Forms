@@ -4,16 +4,20 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue.svg)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-A comprehensive demonstration of Angular 21's powerful **Signal Forms** feature, showcasing how to build complex, nested forms with reusable components. This project serves as a practical example for developers looking to leverage Angular's signal forms for better performance and developer experience.
+An open-source project showcasing Angular 21's **experimental Signal Forms** feature. This repository demonstrates how to build complex, nested forms with reusable components, serving as a practical example for developers exploring Angular's signal-based forms for improved performance and developer experience. Contributions, suggestions, and feedback are highly appreciated to help evolve this experimental technology.
 
 ## 🚀 Features
 
-- **Signal-Based Forms**: Utilize Angular 21's new signal forms for reactive, efficient form handling.
+- **Signal-Based Forms**: Utilize Angular 21's experimental signal forms for reactive, efficient form handling.
 - **Nested Components**: Demonstrates passing form fields and sub-forms to child components.
 - **Reusable Form Items**: Modular components for text inputs, number inputs, and error display.
 - **Validation**: Built-in validation with custom error messages.
 - **Modern UI**: Clean, responsive design with SCSS styling.
 - **TypeScript**: Fully typed for better development experience.
+
+## ⚠️ Experimental Nature
+
+This project uses Angular 21's Signal Forms, which are experimental and subject to change. It's intended for learning, experimentation, and showcasing purposes. Not recommended for production use without thorough testing.
 
 ## 📋 Prerequisites
 
@@ -23,7 +27,7 @@ Before you begin, ensure you have the following installed:
 - **npm** (comes with Node.js) or **yarn**
 - **Angular CLI** (version 21) - Install globally with `npm install -g @angular/cli`
 
-## 🛠️ Installation
+## ️ Installation
 
 1. **Clone the repository**:
    ```bash
@@ -125,16 +129,26 @@ Angular 21 introduces **Signal Forms**, a new way to handle forms using signals 
 
 ## 🤝 Contributing
 
-We welcome contributions! Here's how you can help:
+We welcome contributions to this open-source project! As this is an experimental showcase, we're particularly interested in:
+
+- **New Form Components**: Create additional reusable form item components (e.g., select, checkbox, radio).
+- **Advanced Validation**: Implement more complex validation scenarios.
+- **UI Enhancements**: Improve the styling and user experience.
+- **Documentation**: Add more examples, tutorials, or improve existing docs.
+- **Bug Fixes**: Report and fix any issues you encounter.
+
+### How to Contribute
 
 1. **Fork the repository**
 2. **Create a feature branch**: `git checkout -b feature/amazing-feature`
-3. **Make your changes** and add tests
+3. **Make your changes**
 4. **Commit your changes**: `git commit -m 'Add amazing feature'`
 5. **Push to the branch**: `git push origin feature/amazing-feature`
 6. **Open a Pull Request**
 
-Please ensure your code follows the existing style and includes appropriate tests.
+**Note**: As this is an experimental showcase project, unit tests are not required. Focus on demonstrating Signal Forms concepts and providing clear, working examples. Suggestions and feedback on the experimental features are highly valued!
+
+Please ensure your code follows the existing style.
 
 ## 📄 License
 
