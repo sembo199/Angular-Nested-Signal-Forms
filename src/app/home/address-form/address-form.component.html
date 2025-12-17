@@ -1,0 +1,19 @@
+<div id="address-form" class="subform">
+    <h3>Address Form</h3>
+    <app-text-form-item label="Street" [field]="detailsForm().street" />
+    <app-number-form-item label="Number" [field]="detailsForm().number" />
+    <app-text-form-item label="Number Addition" [field]="detailsForm().numberAddition" />
+    <app-text-form-item label="City" [field]="detailsForm().city" />
+    <app-text-form-item label="State" [field]="detailsForm().state" />
+    <app-text-form-item label="Zip" [field]="detailsForm().zip" />
+    <!-- Formatted address shown below -->
+     @if (
+         detailsForm().street().value() &&
+         detailsForm().number().value() &&
+         detailsForm().city().value() &&
+         detailsForm().state().value() &&
+         detailsForm().zip().value()
+     ) {
+         <p><i>{{ detailsForm().street().value() }}, {{ detailsForm().city().value() }}, {{ detailsForm().state().value() }} {{ detailsForm().zip().value() }}</i></p>
+     }
+</div>

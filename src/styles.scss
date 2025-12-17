@@ -1,0 +1,141 @@
+/* Clean, modern global styles */
+
+html, body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	overflow-x: hidden;
+}
+
+body {
+	min-height: 100vh;
+	font-family: 'Inter', 'Segoe UI', 'Roboto', Arial, sans-serif;
+	background: linear-gradient(120deg, #f8fafc 0%, #e0e7ef 100%);
+	color: #23272f;
+	transition: background 0.4s;
+}
+
+a {
+	color: #2563eb;
+	text-decoration: none;
+	font-weight: 500;
+	border-bottom: 1.5px solid #2563eb22;
+	transition: color 0.18s, border-bottom 0.18s;
+}
+a:hover, a:focus {
+	color: #1e40af;
+	border-bottom: 2px solid #1e40af;
+}
+
+button, .btn {
+	background: linear-gradient(90deg, #2563eb 0%, #60a5fa 100%);
+	color: #fff;
+	border: none;
+	border-radius: 6px;
+	padding: 0.6em 1.6em;
+	font-size: 1rem;
+	font-weight: 500;
+	box-shadow: 0 2px 8px rgba(37,99,235,0.08);
+	cursor: pointer;
+	transition: background 0.22s, box-shadow 0.18s, transform 0.12s;
+	outline: none;
+}
+button:hover, .btn:hover, button:focus, .btn:focus {
+	background: linear-gradient(90deg, #1e40af 0%, #60a5fa 100%);
+	box-shadow: 0 4px 16px rgba(37,99,235,0.13);
+	transform: translateY(-1px) scale(1.02);
+}
+button:disabled, .btn:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+	transform: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Inter', 'Segoe UI', 'Roboto', Arial, sans-serif;
+	font-weight: 700;
+	letter-spacing: 0.01em;
+	margin-top: 1.2em;
+	margin-bottom: 0.4em;
+	color: #23272f;
+	text-shadow: none;
+}
+h1 {
+	font-size: 2.4rem;
+	background: linear-gradient(90deg, #c7d2ea 0%, #60a5fa 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	color: transparent;
+}
+h2 {
+	font-size: 1.8rem;
+	color: #2563eb;
+}
+h3 {
+	font-size: 1.3rem;
+	color: #3b82f6;
+}
+
+/* Card style utility */
+.card {
+	background: #fff;
+	border-radius: 12px;
+	box-shadow: 0 2px 12px rgba(30,41,59,0.07);
+	padding: 1.5em;
+	margin: 1.2em 0;
+	border: 1px solid #e5e7eb;
+}
+
+/* Smooth transitions for interactive elements */
+*, *:before, *:after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	transition: background 0.18s, color 0.14s, box-shadow 0.14s;
+}
+/* You can add global styles to this file, and also import other style files */
+
+.form-item {
+    // Modern styles for form items
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.2em;
+    font-size: 1rem;
+    font-family: 'Inter', 'Segoe UI', 'Roboto', Arial, sans-serif;
+    background-color: linear-gradient(90deg, #f0f4ff 0%, #e0e7ff 100%);
+
+    label {
+        margin-bottom: 0.5em;
+        font-weight: 600;
+        color: linear-gradient(90deg, #2563eb 0%, #60a5fa 100%);
+    }
+
+    input {
+        padding: 0.8em;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-size: 1rem;
+        transition: border-color 0.18s, box-shadow 0.18s;
+
+        &:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+            outline: none;
+        }
+    }
+}
+
+form .subform {
+	margin-top: 1.5em;
+	padding: 1em;
+	border: 1px solid #e5e7eb;
+	border-radius: 8px;
+	background-color: #f3f4f6;
+
+	h3 {
+		margin-top: 0;
+		color: #1e40af;
+	}
+}

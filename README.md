@@ -1,0 +1,151 @@
+# SignalForms Demo
+
+[![Angular](https://img.shields.io/badge/Angular-21-red.svg)](https://angular.io/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue.svg)](https://www.typescriptlang.org/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+A comprehensive demonstration of Angular 21's powerful **Signal Forms** feature, showcasing how to build complex, nested forms with reusable components. This project serves as a practical example for developers looking to leverage Angular's reactive forms with signals for better performance and developer experience.
+
+## 🚀 Features
+
+- **Signal-Based Forms**: Utilize Angular 21's new signal forms for reactive, efficient form handling.
+- **Nested Components**: Demonstrates passing form fields and sub-forms to child components.
+- **Reusable Form Items**: Modular components for text inputs, number inputs, and error display.
+- **Validation**: Built-in validation with custom error messages.
+- **Modern UI**: Clean, responsive design with SCSS styling.
+- **TypeScript**: Fully typed for better development experience.
+
+## 📋 Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- **Node.js** (version 18 or higher) - [Download here](https://nodejs.org/)
+- **npm** (comes with Node.js) or **yarn**
+- **Angular CLI** (version 21) - Install globally with `npm install -g @angular/cli`
+
+## 🛠️ Installation
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/sembo199/Angular-Nested-Signal-Forms.git
+   cd Angular-Nested-Signal-Forms
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Start the development server**:
+   ```bash
+   npm start
+   ```
+
+4. **Open your browser** and navigate to `http://localhost:4200/`.
+
+## 🎯 Usage
+
+The application presents a user registration form with the following sections:
+
+- **User Details**: ID, Email, and Username fields.
+- **Personal Details**: First Name, Last Name, and Phone.
+- **Address Details**: Street, Number, City, State, and Zip Code.
+
+Fill out the form and click "Submit" to see the form data logged in the console. The submit button is disabled if the form is invalid.
+
+## 🏗️ Project Structure
+
+```
+src/
+├── app/
+│   ├── home/
+│   │   ├── home.component.ts          # Main form component
+│   │   ├── home.component.html        # Form template
+│   │   ├── details-form/              # Nested details form
+│   │   └── address-form/              # Nested address form
+│   ├── shared/
+│   │   ├── form-item/                 # Base form item component
+│   │   ├── text-form-item/            # Text input component
+│   │   ├── number-form-item/          # Number input component
+│   │   └── form-item-errors/          # Error display component
+│   ├── app.component.ts               # Root component
+│   ├── app.config.ts                  # App configuration
+│   └── app.routes.ts                  # Routing configuration
+├── main.ts                            # Application bootstrap
+└── styles.scss                        # Global styles
+```
+
+## 🔍 How Signal Forms Work in This Project
+
+### Signal Forms Overview
+
+Angular 21 introduces **Signal Forms**, a new way to handle forms using signals for reactivity. Unlike traditional reactive forms, signal forms provide:
+
+- **Better Performance**: Signals enable fine-grained reactivity without unnecessary re-renders.
+- **Simpler API**: More intuitive syntax for form creation and validation.
+- **Type Safety**: Full TypeScript support for form structures.
+
+### Key Concepts Demonstrated
+
+1. **Form Creation**:
+   ```typescript
+   userForm = form<UserData>(this.userModel, (schema) => {
+     required(schema.id, { message: 'ID is required' });
+     email(schema.email, { message: 'Email is invalid' });
+     // ... more validations
+   });
+   ```
+
+2. **Nested Forms**:
+   - The main form ([`userForm`](src/app/home/home.component.ts )) contains sub-forms for [`details`](src/app/home/home.component.ts ) and [`address`](src/app/home/home.component.ts ).
+   - Child components receive specific form parts via inputs:
+     ```typescript
+     @Component({...})
+     export class DetailsFormComponent {
+       detailsForm = input.required<FieldTree<UserDetails>>();
+     }
+     ```
+
+3. **Field Binding**:
+   - Components bind to individual fields using the [`[field]`](src/app/shared/form-item-errors/form-item-errors.component.ts ) directive:
+     ```html
+     <input [field]="userForm.email" />
+     ```
+
+4. **Validation and Errors**:
+   - Custom validation functions with error messages.
+   - Error display component shows validation errors when fields are touched and invalid.
+
+### Component Architecture
+
+- **HomeComponent**: Orchestrates the main form and passes sub-forms to child components.
+- **DetailsFormComponent** & **AddressFormComponent**: Handle specific sections of the form.
+- **Form Item Components**: Reusable input components that accept field bindings and labels.
+- **FormItemErrorsComponent**: Displays validation errors for any field.
+
+## 🤝 Contributing
+
+We welcome contributions! Here's how you can help:
+
+1. **Fork the repository**
+2. **Create a feature branch**: `git checkout -b feature/amazing-feature`
+3. **Make your changes** and add tests
+4. **Commit your changes**: `git commit -m 'Add amazing feature'`
+5. **Push to the branch**: `git push origin feature/amazing-feature`
+6. **Open a Pull Request**
+
+Please ensure your code follows the existing style and includes appropriate tests.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 📚 Learn More
+
+- [Angular Signal Forms Documentation](https://angular.dev/guide/signals)
+- [Angular Forms Guide](https://angular.dev/guide/forms)
+- [Angular Signals Overview](https://angular.dev/guide/signals)
+
+---
+
+Built with ❤️ using Angular 21 and Signal Forms. Happy coding! 🚀

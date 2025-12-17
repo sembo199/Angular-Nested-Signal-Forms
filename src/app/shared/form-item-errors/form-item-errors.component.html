@@ -1,0 +1,8 @@
+@let fieldState = field();
+<div class="form-item-errors">
+    @if (fieldState().touched() && fieldState().invalid()) {
+        @for (error of fieldState().errors(); track error) {
+            <p>{{error.message}}</p>
+        }
+    }
+</div>
