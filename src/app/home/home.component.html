@@ -8,3 +8,5 @@
     <app-address-form [detailsForm]="userForm.address" />
     <button class="submit-button" [disabled]="this.userForm().invalid()">Submit</button>
 </form>
+
+<app-user-list [users]="users()" />

@@ -1,0 +1,64 @@
+.user-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(30, 41, 59, 0.08);
+    padding: 1.5em;
+    margin: 2rem auto;
+    max-width: 600px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(30, 41, 59, 0.12);
+    }
+
+    h3 {
+        margin-top: 0;
+        color: #1e40af;
+        font-size: 1.4rem;
+        font-weight: 600;
+        border-bottom: 2px solid #e0e7ff;
+        padding-bottom: 0.5em;
+    }
+
+    p {
+        margin: 0.6em 0 0.4em 0;
+        color: #374151;
+        font-size: 1rem;
+        font-weight: 500;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0.5em 0 1em 0;
+        background: #f9fafb;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid #e5e7eb;
+
+        li {
+            padding: 0.8em 1em;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95rem;
+            color: #4b5563;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            &:hover {
+                background: #f3f4f6;
+            }
+
+            strong {
+                font-weight: 600;
+                color: #1f2937;
+            }
+        }
+    }
+}

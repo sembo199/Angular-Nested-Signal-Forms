@@ -4,6 +4,7 @@ import { TextFormItemComponent } from '../shared/text-form-item/text-form-item.c
 import { NumberFormItemComponent } from '../shared/number-form-item/number-form-item.component';
 import { DetailsFormComponent } from './details-form/details-form.component';
 import { AddressFormComponent } from './address-form/address-form.component';
+import { UserListComponent } from './user-list/user-list.component';
 
 export interface UserData {
   id: number;
@@ -35,12 +36,14 @@ export interface UserAddress {
     TextFormItemComponent,
     NumberFormItemComponent,
     DetailsFormComponent,
-    AddressFormComponent
+    AddressFormComponent,
+    UserListComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
+  users = signal<UserData[]>([]);
   userModel = signal<UserData>({
     id: 1,
     email: 'example@email.com',
@@ -51,12 +54,12 @@ export class HomeComponent {
       phone: '+31612345678'
     },
     address: {
-      street: '',
-      number: 0,
-      numberAddition: '',
-      city: '',
-      state: '',
-      zip: ''
+      street: 'Street',
+      number: 1,
+      numberAddition: 'A',
+      city: 'City',
+      state: 'State',
+      zip: 'Zip'
     }
   });
   userForm = form<UserData>(this.userModel, (schema) =>{
@@ -81,6 +84,7 @@ export class HomeComponent {
   onSubmit(event: Event) {
     event.preventDefault();
     // Perform login logic here
-    console.log('User Form Value:', this.userForm().value);
+    console.log('User Form Value:', this.userForm().value());
+    this.users.set([...this.users(), this.userForm().value()]);
   }
 }
