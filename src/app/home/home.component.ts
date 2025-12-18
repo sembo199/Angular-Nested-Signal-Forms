@@ -5,6 +5,7 @@ import { NumberFormItemComponent } from '../shared/number-form-item/number-form-
 import { DetailsFormComponent } from './details-form/details-form.component';
 import { AddressFormComponent } from './address-form/address-form.component';
 import { UserListComponent } from './user-list/user-list.component';
+import { UserCanvasOverviewComponent } from './user-canvas-overview/user-canvas-overview.component';
 
 const userFormDefaults: UserData = {
   id: NaN,
@@ -57,7 +58,8 @@ export interface UserAddress {
     NumberFormItemComponent,
     DetailsFormComponent,
     AddressFormComponent,
-    UserListComponent
+    UserListComponent,
+    UserCanvasOverviewComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'

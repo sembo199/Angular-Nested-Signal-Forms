@@ -13,3 +13,23 @@ form {
     width: 100%;
     margin-top: 1rem;
 }
+
+.overview-section {
+    max-width: 960px;
+    margin: 3rem auto;
+    text-align: center;
+    color: #0f172a;
+
+    h3 {
+        font-family: 'Inter', 'Segoe UI', 'Roboto', Arial, sans-serif;
+        font-weight: 700;
+        font-size: 1.75rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .overview-copy {
+        max-width: 640px;
+        margin: 0 auto 1.5rem;
+        color: #475569;
+    }
+}

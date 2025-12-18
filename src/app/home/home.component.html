@@ -10,4 +10,10 @@
     <button class="submit-button" [disabled]="this.userForm().invalid()">Submit</button>
 </form>
 
+<section class="overview-section">
+    <h3>User Galaxy</h3>
+    <p class="overview-copy">The canvas below maps each user into an orbital layout with quick insights.</p>
+    <app-user-canvas-overview [users]="users()" />
+</section>
+
 <app-user-list [users]="users()" />
