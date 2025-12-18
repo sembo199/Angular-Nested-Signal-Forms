@@ -6,6 +6,25 @@ import { DetailsFormComponent } from './details-form/details-form.component';
 import { AddressFormComponent } from './address-form/address-form.component';
 import { UserListComponent } from './user-list/user-list.component';
 
+const userFormDefaults: UserData = {
+  id: NaN,
+  email: 'example@email.com',
+  username: 'Default',
+  password: '',
+  details: {
+    firstName: 'John',
+    lastName: 'Doe',
+    phone: '+31612345678'
+  },
+  address: {
+    street: 'Street',
+    number: 1,
+    numberAddition: 'A',
+    city: 'City',
+    state: 'State',
+    zip: 'Zip'
+  }
+};
 export interface UserData {
   id: number;
   email: string;
@@ -45,25 +64,7 @@ export interface UserAddress {
 })
 export class HomeComponent {
   users = signal<UserData[]>([]);
-  userModel = signal<UserData>({
-    id: NaN,
-    email: 'example@email.com',
-    username: 'Default',
-    password: '',
-    details: {
-      firstName: 'John',
-      lastName: 'Doe',
-      phone: '+31612345678'
-    },
-    address: {
-      street: 'Street',
-      number: 1,
-      numberAddition: 'A',
-      city: 'City',
-      state: 'State',
-      zip: 'Zip'
-    }
-  });
+  userModel = signal<UserData>(userFormDefaults);
   userForm = form<UserData>(this.userModel, (schema) =>{
     // user specific
     required(schema.id, { message: 'ID is required' });
@@ -122,5 +123,10 @@ export class HomeComponent {
   onSubmit(event: Event) {
     event.preventDefault();
     this.users.set([...this.users(), this.userForm().value()]);
+    this.resetForm();
+  }
+
+  private resetForm() {
+    this.userForm().reset(userFormDefaults);
   }
 }
