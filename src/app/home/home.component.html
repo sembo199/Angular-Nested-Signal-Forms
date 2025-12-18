@@ -2,8 +2,9 @@
     <h2>Welcome to SignalForms</h2>
     <p>This is the parent component with nested forms.</p>
     <app-number-form-item label="UserId" [field]="userForm.id" />
-    <app-text-form-item label="Email" [field]="userForm.email" />
+    <app-text-form-item label="Email" type="email" [field]="userForm.email" />
     <app-text-form-item label="Username" [field]="userForm.username" />
+    <app-text-form-item label="Password" type="password" [field]="userForm.password" />
     <app-details-form [detailsForm]="userForm.details" />
     <app-address-form [detailsForm]="userForm.address" />
     <button class="submit-button" [disabled]="this.userForm().invalid()">Submit</button>

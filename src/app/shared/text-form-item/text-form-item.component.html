@@ -1,5 +1,39 @@
 <div class="form-item">
     <label [for]="label()">{{ label() }}</label>
-    <input [id]="label()" [placeholder]="label()" [field]="field()" />
+    @switch (type()) {
+        @case ('text') {
+            <input [id]="label()" type="text" [placeholder]="label()" [field]="field()" />
+        }
+        @case ('tel') {
+            <div class="input-container">
+                <span class="icon">📞</span>
+                <input [id]="label()" type="tel" [placeholder]="label()" [field]="field()" />
+            </div>
+        }
+        @case ('email') {
+            <div class="input-container">
+                <span class="icon">📧</span>
+                <input [id]="label()" type="email" [placeholder]="label()" [field]="field()" />
+            </div>
+        }
+        @case ('password') {
+            @if (isPasswordVisible()) {
+                <div class="input-container password">
+                    <span class="icon lock">🔒</span>
+                    <input [id]="label()" type="text" [placeholder]="label()" [field]="field()" />
+                    <span class="icon eye" (click)="toggleVisibility()">🙈</span>
+                </div>
+            } @else {
+                <div class="input-container password">
+                    <span class="icon lock">🔒</span>
+                    <input [id]="label()" type="password" [placeholder]="label()" [field]="field()" />
+                    <span class="icon eye" (click)="toggleVisibility()">👁️</span>
+                </div>
+            }
+            <div class="strength-bar">
+                <div class="strength-fill" [style.width.%]="passwordStrength()" [style.background-color]="getStrengthColor()"></div>
+            </div>
+        }
+    }
     <app-form-item-errors [field]="field()"></app-form-item-errors>
 </div>

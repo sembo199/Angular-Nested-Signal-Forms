@@ -10,6 +10,7 @@ export interface UserData {
   id: number;
   email: string;
   username: string;
+  password: string;
   details: UserDetails;
   address: UserAddress;
 }
@@ -48,6 +49,7 @@ export class HomeComponent {
     id: NaN,
     email: 'example@email.com',
     username: 'Default',
+    password: '',
     details: {
       firstName: 'John',
       lastName: 'Doe',
@@ -88,6 +90,22 @@ export class HomeComponent {
     required(schema.username, { message: 'Username is required' });
     minLength(schema.username, 3, { message: 'Username must be at least 3 characters' });
     maxLength(schema.username, 20, { message: 'Username must be at most 20 characters' });
+    required(schema.password, { message: 'Password is required' });
+    minLength(schema.password, 8, { message: 'Password must be at least 8 characters' });
+    maxLength(schema.password, 32, { message: 'Password must be at most 32 characters' });
+    validate(schema.password, ({value}) => {
+      const hasUpperCase = /[A-Z]/.test(value());
+      const hasLowerCase = /[a-z]/.test(value());
+      const hasNumber = /[0-9]/.test(value());
+      const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value());
+      if (!hasUpperCase || !hasLowerCase || !hasNumber || !hasSpecialChar) {
+        return {
+          kind: 'complexity',
+          message: 'Password must contain uppercase, lowercase, number, and special character'
+        };
+      }
+      return null;
+    });
     // details form
     required(schema.details.firstName, { message: 'First name is required' });
     required(schema.details.lastName, { message: 'Last name is required' });
