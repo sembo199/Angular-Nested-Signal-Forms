@@ -7,7 +7,15 @@
     <app-text-form-item label="Password" type="password" [field]="userForm.password" />
     <app-details-form [detailsForm]="userForm.details" />
     <app-address-form [detailsForm]="userForm.address" />
+    <h3>Hobbies</h3>
+    <button class="button-full" type="button" (click)="addHobby()">Add Hobby</button>
+    @for (hobbyForm of userForm.hobbies; track hobbyForm; let idx = $index) {
+        <app-hobby-form [hobbyForm]="hobbyForm" [index]="idx" (remove)="removeHobby(idx)" />
+    } @empty {
+        <p class="no-hobbies">No hobbies added yet.</p>
+    }
     <button class="submit-button" [disabled]="this.userForm().invalid()">Submit</button>
+    <button class="console-button" type="button" (click)="logToConsole()">Log to console</button>
 </form>
 
 <section class="overview-section">

@@ -1,11 +1,12 @@
 import { Component, signal } from '@angular/core';
-import { email, Field, form, max, maxLength, min, minLength, required, validate } from '@angular/forms/signals';
+import { applyEach, email, Field, form, max, maxLength, min, minLength, required, validate } from '@angular/forms/signals';
 import { TextFormItemComponent } from '../shared/text-form-item/text-form-item.component';
 import { NumberFormItemComponent } from '../shared/number-form-item/number-form-item.component';
 import { DetailsFormComponent } from './details-form/details-form.component';
 import { AddressFormComponent } from './address-form/address-form.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { UserCanvasOverviewComponent } from './user-canvas-overview/user-canvas-overview.component';
+import { HobbyFormComponent } from './hobby-form/hobby-form.component';
 
 const userFormDefaults: UserData = {
   id: NaN,
@@ -24,7 +25,8 @@ const userFormDefaults: UserData = {
     city: 'City',
     state: 'State',
     zip: 'Zip'
-  }
+  },
+  hobbies: []
 };
 export interface UserData {
   id: number;
@@ -33,6 +35,7 @@ export interface UserData {
   password: string;
   details: UserDetails;
   address: UserAddress;
+  hobbies: UserHobby[];
 }
 
 export interface UserDetails {
@@ -50,6 +53,11 @@ export interface UserAddress {
   zip: string;
 }
 
+export interface UserHobby {
+  name: string;
+  frequencyPerWeek: number;
+}
+
 @Component({
   selector: 'app-home',
   imports: [
@@ -59,7 +67,8 @@ export interface UserAddress {
     DetailsFormComponent,
     AddressFormComponent,
     UserListComponent,
-    UserCanvasOverviewComponent
+    UserCanvasOverviewComponent,
+    HobbyFormComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -120,12 +129,39 @@ export class HomeComponent {
     required(schema.address.city, { message: 'City is required' });
     required(schema.address.state, { message: 'State is required' });
     required(schema.address.zip, { message: 'Zip is required' });
+
+    // hobbies form
+    applyEach(schema.hobbies, (hobbySchema) => {
+      required(hobbySchema.name, { message: 'Hobby name is required' });
+      required(hobbySchema.frequencyPerWeek, { message: 'Frequency per week is required' });
+      min(hobbySchema.frequencyPerWeek, 1, { message: 'Frequency per week must be at least 1' });
+      max(hobbySchema.frequencyPerWeek, 7, { message: 'Frequency per week must be at most 7' });
+    });
   });
 
   onSubmit(event: Event) {
     event.preventDefault();
     this.users.set([...this.users(), this.userForm().value()]);
     this.resetForm();
+  }
+
+  addHobby() {
+    this.userModel.update(user => ({
+      ...user,
+      hobbies: [...user.hobbies, { name: '', frequencyPerWeek: 1 }]
+    }));
+  }
+
+  removeHobby(index: number) {
+    console.log('Removing hobby at index:', index);
+    this.userModel.update(user => ({
+      ...user,
+      hobbies: user.hobbies.filter((_, idx) => idx !== index)
+    }));
+  }
+
+  logToConsole() {
+    console.log(this.userForm().value());
   }
 
   private resetForm() {

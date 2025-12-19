@@ -10,6 +10,7 @@ An open-source project showcasing Angular 21's **experimental Signal Forms** fea
 
 - **Signal-Based Forms**: Utilize Angular 21's experimental signal forms for reactive, efficient form handling.
 - **Nested Components**: Demonstrates passing form fields and sub-forms to child components.
+- **Iterative Subforms (Arrays)**: Demonstrates dynamic array-based subforms (add/remove items) with per-item validation.
 - **Reusable Form Items**: Modular components for text inputs, number inputs, and error display.
 - **Validation**: Built-in validation with custom error messages.
 - **Modern UI**: Clean, responsive design with SCSS styling.
@@ -54,6 +55,7 @@ The application presents a user registration form with the following sections:
 - **User Details**: ID, Email, and Username fields.
 - **Personal Details**: First Name, Last Name, and Phone.
 - **Address Details**: Street, Number, City, State, and Zip Code.
+- **Hobbies (Array)**: Add/remove hobbies, each hobby is a small subform.
 
 Fill out the form and click "Submit" to see the form data logged in the console. The submit button is disabled if the form is invalid.
 
@@ -67,6 +69,9 @@ src/
 │   │   ├── home.component.html        # Form template
 │   │   ├── details-form/              # Nested details form
 │   │   └── address-form/              # Nested address form
+│   │   ├── hobby-form/                # Iterative (array) subform item
+│   │   ├── user-list/                 # Render submitted users
+│   │   └── user-canvas-overview/      # Canvas visualization
 │   ├── shared/
 │   │   ├── form-item/                 # Base form item component
 │   │   ├── text-form-item/            # Text input component
@@ -101,7 +106,7 @@ Angular 21 introduces **Signal Forms**, a new way to handle forms using signals 
    ```
 
 2. **Nested Forms**:
-   - The main form ([`userForm`](src/app/home/home.component.ts )) contains sub-forms for [`details`](src/app/home/home.component.ts ) and [`address`](src/app/home/home.component.ts ).
+    - The main form ([src/app/home/home.component.ts](src/app/home/home.component.ts)) contains sub-forms for `details` and `address`, plus an array of `hobbies`.
    - Child components receive specific form parts via inputs:
      ```typescript
      @Component({...})
@@ -111,7 +116,7 @@ Angular 21 introduces **Signal Forms**, a new way to handle forms using signals 
      ```
 
 3. **Field Binding**:
-   - Components bind to individual fields using the [`[field]`](src/app/shared/form-item-errors/form-item-errors.component.ts ) directive:
+   - Components bind to individual fields using the `[field]` directive (see [src/app/shared/form-item/form-item.component.ts](src/app/shared/form-item/form-item.component.ts)):
      ```html
      <input [field]="userForm.email" />
      ```
@@ -124,8 +129,97 @@ Angular 21 introduces **Signal Forms**, a new way to handle forms using signals 
 
 - **HomeComponent**: Orchestrates the main form and passes sub-forms to child components.
 - **DetailsFormComponent** & **AddressFormComponent**: Handle specific sections of the form.
+- **HobbyFormComponent**: A reusable subform used for each entry in the hobbies array.
 - **Form Item Components**: Reusable input components that accept field bindings and labels.
 - **FormItemErrorsComponent**: Displays validation errors for any field.
+
+## 🔁 Iterative Subforms (Array) Setup: Hobbies
+
+This repo includes a dynamic “array subform” implementation for `hobbies`. The key idea is:
+
+- The model owns the array (`userModel().hobbies`).
+- Signal Forms derives a field-array (`userForm.hobbies`) from that model.
+- You render each item using `@for` and pass the item’s `FieldTree` into a child component.
+- You add/remove items by immutably updating the model array.
+
+### 1) Model defaults include an array
+
+The default model has `hobbies: []` (see [src/app/home/home.component.ts](src/app/home/home.component.ts)).
+
+### 2) Per-item validation using `applyEach`
+
+`applyEach` runs validators against each element schema in the array:
+
+```ts
+// src/app/home/home.component.ts
+applyEach(schema.hobbies, (hobbySchema) => {
+   required(hobbySchema.name, { message: 'Hobby name is required' });
+   required(hobbySchema.frequencyPerWeek, { message: 'Frequency per week is required' });
+   min(hobbySchema.frequencyPerWeek, 1, { message: 'Frequency per week must be at least 1' });
+   max(hobbySchema.frequencyPerWeek, 7, { message: 'Frequency per week must be at most 7' });
+});
+```
+
+### 3) Add/remove items by updating the model (immutable array updates)
+
+Because `form()` is driven by `userModel`, updating the array in the model automatically updates the derived fields in `userForm.hobbies`.
+
+```ts
+// src/app/home/home.component.ts
+addHobby() {
+   this.userModel.update(user => ({
+      ...user,
+      hobbies: [...user.hobbies, { name: '', frequencyPerWeek: 1 }],
+   }));
+}
+
+removeHobby(index: number) {
+   this.userModel.update(user => ({
+      ...user,
+      hobbies: user.hobbies.filter((_, idx) => idx !== index),
+   }));
+}
+```
+
+### 4) Render the field-array with `@for` and delegate each item to a subform component
+
+The parent iterates over `userForm.hobbies` and passes each `FieldTree<UserHobby>` down:
+
+```html
+<!-- src/app/home/home.component.html -->
+<h3>Hobbies</h3>
+<button type="button" (click)="addHobby()">Add Hobby</button>
+
+@for (hobbyForm of userForm.hobbies; track hobbyForm; let idx = $index) {
+   <app-hobby-form
+      [hobbyForm]="hobbyForm"
+      [index]="idx"
+      (remove)="removeHobby(idx)" />
+} @empty {
+   <p>No hobbies added yet.</p>
+}
+```
+
+And each item subform binds to the item fields:
+
+```ts
+// src/app/home/hobby-form/hobby-form.component.ts
+export class HobbyFormComponent {
+   index = input.required<number>();
+   hobbyForm = input.required<FieldTree<UserHobby>>();
+   remove = output<boolean>();
+
+   removeHobby() {
+      this.remove.emit(true);
+   }
+}
+```
+
+```html
+<!-- src/app/home/hobby-form/hobby-form.component.html -->
+<app-text-form-item label="Hobby Name" [field]="hobbyForm().name" />
+<app-number-form-item label="Frequency Per Week" [field]="hobbyForm().frequencyPerWeek" />
+```
 
 ## 🤝 Contributing
 

@@ -1,0 +1,6 @@
+<div id="hobby-form" class="subform">
+    <h3>Hobby {{ index() + 1 }}:</h3>
+    <button class="remove-button" (click)="removeHobby()">Remove Hobby</button>
+    <app-text-form-item label="Hobby Name" [field]="hobbyForm().name" />
+    <app-number-form-item label="Frequency Per Week" [field]="hobbyForm().frequencyPerWeek" />
+</div>
